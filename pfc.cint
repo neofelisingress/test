@@ -1,11 +1,4 @@
-cint_reset();
 
-
-int rv;
-int profile_idx;
-int pg_arr[16];
-int pg_arr_count;
-profile_idx = 0;
 uint32 flags;
 int port;
 int tc;
@@ -17,10 +10,7 @@ int mc_num[max_port] = {0};
 bcm_gport_t uc_queue[max_port][12];
 bcm_gport_t mc_queue[max_port][12];
 bcm_gport_t ucgport, mcgport;
-sal_memset(uc_num, 0, sizeof(uc_num));
-sal_memset(mc_num, 0, sizeof(mc_num));
-sal_memset(uc_queue, 0, sizeof(uc_queue));
-sal_memset(mc_queue, 0, sizeof(mc_queue));
+
 
 bcm_port_config_t port_config;
 bcm_pbmp_t pbmp;
@@ -173,24 +163,6 @@ void setup_buffer()
         print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPoolLimitBytes, 37382958);
         print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPoolResetOffsetLimitBytes, 22860);
         print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressHeadroomPool, 0);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPGSharedDynamicEnable, 1);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlDropLimitAlpha, 7);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPGHeadroomLimitBytes, 0);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPGResetFloorBytes, 0);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPGResetOffsetBytes, 0);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPoolSharedLimitBytes, 83111594);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPoolMinLimitBytes, 0);
-        print bcm_cosq_control_set(0, port, 1, bcmCosqControlIngressPortPoolResumeLimitBytes, 83111594);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPool, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressHeadroomPool, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPoolLimitBytes, 37382958);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPoolResetOffsetLimitBytes, 22860);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressHeadroomPool, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPGSharedDynamicEnable, 1);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlDropLimitAlpha, 7);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPGHeadroomLimitBytes, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPGResetFloorBytes, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPGResetOffsetBytes, 0);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPoolSharedLimitBytes, 83111594);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPoolMinLimitBytes, 0);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlIngressPortPoolResumeLimitBytes, 83111594);
@@ -274,20 +246,6 @@ void setup_buffer()
         print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolSharedLimitBytes, 83111594);
         print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolYellowLimitBytes, 10388854);
         print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolRedLimitBytes, 10388854);
-        print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolSharedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolYellowResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolRedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 0, bcmCosqControlEgressPortPoolColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueGroupMinEnable, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueGroupMinEnable, 0);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueColorLimitDynamicEnable, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueColorLimitDynamicEnable, 0);
         print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueColorLimitEnable, 0);
         print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueYellowLimit, 0);
         print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueYellowLimit, 0);
@@ -333,20 +291,6 @@ void setup_buffer()
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressPoolYellowSharedLimitBytes, 3504438);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressPoolRedSharedLimitBytes, 2628138);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressPoolResumeLimitBytes, 3504438);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCSharedDynamicEnable, 1);
-        print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCSharedDynamicEnable, 1);
-        ucgport= uc_queue[port][2];
-        mcgport = mc_queue[port][2];
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlDropLimitAlpha, 6);
-        print bcm_cosq_control_set(0, mcgport, 2, bcmCosqControlDropLimitAlpha, 6);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolSharedLimitBytes, 83111594);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolYellowLimitBytes, 10388854);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolRedLimitBytes, 10388854);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolSharedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolYellowResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolRedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCQueueGroupMinEnable, 0);
         print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCQueueGroupMinEnable, 0);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCQueueLimitEnable, 1);
         print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCQueueLimitEnable, 1);
@@ -633,17 +577,6 @@ void setup_buffer()
         print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueGroupMinEnable, 0);
         print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueLimitEnable, 1);
         print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueColorLimitDynamicEnable, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueColorLimitDynamicEnable, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueYellowLimit, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueYellowLimit, 0);
-        print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueRedLimit, 0);
-        print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueRedLimit, 0);
         print bcm_cosq_control_set(0, port, 0, bcmCosqControlEgressUCQueueResumeOffsetBytes, 0);
         print bcm_cosq_control_set(0, port, 8, bcmCosqControlEgressMCQueueResumeOffsetBytes, 508);
          // _brcm_sai_egress_service_pool_set(0, port=1, qid=1, spid=0);
@@ -698,14 +631,6 @@ void setup_buffer()
         print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolYellowLimitBytes, 10388854);
         print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolRedLimitBytes, 10388854);
         print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolSharedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolYellowResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolRedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 2, bcmCosqControlEgressPortPoolColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCQueueGroupMinEnable, 0);
-        print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCQueueGroupMinEnable, 0);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCQueueLimitEnable, 1);
         print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCQueueLimitEnable, 1);
         print bcm_cosq_control_set(0, port, 2, bcmCosqControlEgressUCQueueColorLimitEnable, 0);
         print bcm_cosq_control_set(0, port, 10, bcmCosqControlEgressMCQueueColorLimitEnable, 0);
@@ -739,38 +664,9 @@ void setup_buffer()
         print bcm_cosq_control_set(0, port, 4, bcmCosqControlEgressUCQueueLimitEnable, 1);
         print bcm_cosq_control_set(0, port, 4, bcmCosqControlEgressUCQueueColorLimitEnable, 0);
         print bcm_cosq_control_set(0, port, 4, bcmCosqControlEgressUCQueueColorLimitDynamicEnable, 0);
-        print bcm_cosq_control_set(0, port, 4, bcmCosqControlEgressUCQueueYellowLimit, 0);
-        print bcm_cosq_control_set(0, port, 4, bcmCosqControlEgressUCQueueRedLimit, 0);
-        print bcm_cosq_control_set(0, port, 4, bcmCosqControlEgressUCQueueResumeOffsetBytes, 0);
-         // _brcm_sai_egress_service_pool_set(0, port=1, qid=5, spid=0);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlUCEgressPool, 0);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressPoolSharedLimitBytes, 37382958);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressPoolYellowSharedLimitBytes, 3504438);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressPoolRedSharedLimitBytes, 2628138);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressPoolResumeLimitBytes, 3504438);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCSharedDynamicEnable, 1);
-        ucgport= uc_queue[port][5];
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlDropLimitAlpha, 6);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolSharedLimitBytes, 83111594);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolYellowLimitBytes, 10388854);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolRedLimitBytes, 10388854);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolSharedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolYellowResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolRedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 5, bcmCosqControlEgressPortPoolColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueGroupMinEnable, 0);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueColorLimitDynamicEnable, 0);
         print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueYellowLimit, 0);
         print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueRedLimit, 0);
         print bcm_cosq_control_set(0, port, 5, bcmCosqControlEgressUCQueueResumeOffsetBytes, 0);
-         // _brcm_sai_egress_service_pool_set(0, port=1, qid=6, spid=0);
-        print bcm_cosq_control_set(0, port, 6, bcmCosqControlUCEgressPool, 0);
-        print bcm_cosq_control_set(0, port, 6, bcmCosqControlEgressPoolSharedLimitBytes, 37382958);
-        print bcm_cosq_control_set(0, port, 6, bcmCosqControlEgressPoolYellowSharedLimitBytes, 3504438);
-        print bcm_cosq_control_set(0, port, 6, bcmCosqControlEgressPoolRedSharedLimitBytes, 2628138);
         print bcm_cosq_control_set(0, port, 6, bcmCosqControlEgressPoolResumeLimitBytes, 3504438);
         print bcm_cosq_control_set(0, port, 6, bcmCosqControlEgressUCSharedDynamicEnable, 1);
         ucgport= uc_queue[port][6];
@@ -802,26 +698,9 @@ void setup_buffer()
         print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolSharedLimitBytes, 83111594);
         print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolYellowLimitBytes, 10388854);
         print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolRedLimitBytes, 10388854);
-        print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolSharedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolYellowResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolRedResumeBytes, 10388346);
-        print bcm_cosq_control_set(0, ucgport, 7, bcmCosqControlEgressPortPoolColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueGroupMinEnable, 0);
-        print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueLimitEnable, 1);
-        print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueColorLimitEnable, 0);
-        print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueColorLimitDynamicEnable, 0);
         print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueYellowLimit, 0);
         print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueRedLimit, 0);
         print bcm_cosq_control_set(0, port, 7, bcmCosqControlEgressUCQueueResumeOffsetBytes, 0);
-         // _brcm_sai_egress_service_pool_set(0, port=1, qid=3, spid=1);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlUCEgressPool, 1);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlEgressPoolSharedLimitBytes, 7314184);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlEgressPoolYellowSharedLimitBytes, 685546);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlEgressPoolRedSharedLimitBytes, 514096);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlEgressPoolResumeLimitBytes, 685546);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlEgressUCSharedDynamicEnable, 1);
-        print bcm_cosq_control_set(0, port, 11, bcmCosqControlEgressMCSharedDynamicEnable, 1);
         ucgport= uc_queue[port][3];
         mcgport = mc_queue[port][3];
         print bcm_cosq_control_set(0, ucgport, 3, bcmCosqControlDropLimitAlpha, 7);
@@ -873,9 +752,6 @@ void setup_buffer()
         print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPGSharedDynamicEnable, 1);
         print bcm_cosq_control_set(0, port, 3, bcmCosqControlDropLimitAlpha, 7);
         print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPGHeadroomLimitBytes, 36570285);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPGResetFloorBytes, 0);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPGResetOffsetBytes, 18432);
-        print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPoolSharedLimitBytes, 83111594);
         print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPoolMinLimitBytes, 0);
         print bcm_cosq_control_set(0, port, 3, bcmCosqControlIngressPortPoolResumeLimitBytes, 83111594);
     }
@@ -941,8 +817,5 @@ BCM_PBMP_ITER(pbmp, port)
     print bcm_cosq_port_profile_set(0, port, bcmCosqProfilePfc, 1);
 }
 
-BCM_PBMP_ITER(pbmp, port)
-{
-    bcm_port_control_set(0, port, bcmPortControlMmuTrafficEnable, 1);
-}
+
 
